@@ -106,6 +106,10 @@ func resourceKsyunSubnet() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"availble_i_p_number": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -220,7 +224,7 @@ func resourceKsyunSubnetDelete(d *schema.ResourceData, meta interface{}) error {
 	deleteSubnet["SubnetId"] = d.Id()
 	action := "DeleteSubnet"
 
-	return resource.Retry(5*time.Minute, func() *resource.RetryError {
+	return resource.Retry(25*time.Minute, func() *resource.RetryError {
 		logger.Debug(logger.ReqFormat, action, deleteSubnet)
 		resp, err1 := conn.DeleteSubnet(&deleteSubnet)
 		logger.Debug(logger.AllFormat, action, deleteSubnet, *resp, err1)
